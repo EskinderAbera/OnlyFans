@@ -7,7 +7,7 @@ export default [
       "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png",
     name: "Elon",
     handle: "elon",
-    bio: "hello",
+    bio: "In Informatics, dummy data is benign information that does not contain any useful data, but serves to reserve space where real data is nominally present.",
     subscriptionPrice: 0,
   },
   {

@@ -1,24 +1,39 @@
-import { Image, StyleSheet, Text, View, ImageBackground } from "react-native";
+import { Link } from "expo-router";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 
 export default function UserCard({ user }) {
   return (
-    <ImageBackground source={{ uri: user.coverImage }} style={styles.userCard}>
-      <View style={styles.overlay} />
-      <Image src={user.avatar} style={styles.userImage} />
-      <View>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 22,
-            fontWeight: "500",
-            marginBottom: 5,
-          }}
+    <Link asChild href={`/user/${user.id}`}>
+      <Pressable>
+        <ImageBackground
+          source={{ uri: user.coverImage }}
+          style={styles.userCard}
         >
-          {user.name}
-        </Text>
-        <Text style={{ color: "white" }}>{`@${user.handle}`}</Text>
-      </View>
-    </ImageBackground>
+          <View style={styles.overlay} />
+          <Image src={user.avatar} style={styles.userImage} />
+          <View>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 22,
+                fontWeight: "500",
+                marginBottom: 5,
+              }}
+            >
+              {user.name}
+            </Text>
+            <Text style={{ color: "white" }}>{`@${user.handle}`}</Text>
+          </View>
+        </ImageBackground>
+      </Pressable>
+    </Link>
   );
 }
 
