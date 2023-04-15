@@ -2,23 +2,24 @@ import { Text, StyleSheet, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "expo-router";
 import UserProfileHeader from "../../src/components/UserProfileHeader";
-import posts from "../../assets/data/posts";
 import Post from "../../src/components/Post";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { DataStore } from "aws-amplify";
-import { User } from "../../src/models";
+import { User, Post as PostModel } from "../../src/models";
 
 const ProfilePage = () => {
   const [user, setUser] = useState();
+  const [posts, setPosts] = useState([]);
 
   const { id } = useSearchParams();
 
-  const [isSubscribed, setIsSubcribed] = React.useState(false);
+  const [isSubscribed, setIsSubcribed] = React.useState(true);
 
   // const user = users.find((u) => u.id === id);
 
   useEffect(() => {
     DataStore.query(User, id).then(setUser);
+    DataStore.query(PostModel, (post) => post.userID.eq(id)).then(setPosts);
   }, [id]);
 
   if (!user) {
