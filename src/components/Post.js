@@ -3,13 +3,21 @@ import React, { useEffect, useState } from "react";
 import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { DataStore } from "aws-amplify";
 import { User } from "../../src/models";
+import { Storage } from "aws-amplify";
 
 const Post = ({ post }) => {
   const [user, setUser] = useState();
+  const [imageUri, setImageUri] = useState();
 
   useEffect(() => {
     DataStore.query(User, post.userID).then(setUser);
   }, []);
+
+  useEffect(() => {
+    if (post.image) {
+      Storage.get(post.image).then(setImageUri);
+    }
+  }, [post.image]);
 
   return (
     <View style={{ marginVertical: 15 }}>
@@ -41,8 +49,8 @@ const Post = ({ post }) => {
         </View>
       </View>
       <Text style={{ margin: 10, lineHeight: 18 }}>{post.text}</Text>
-      {post.image && (
-        <Image src={post.image} style={{ width: "100%", aspectRatio: 1 }} />
+      {imageUri && (
+        <Image src={imageUri} style={{ width: "100%", aspectRatio: 1 }} />
       )}
       <View style={{ margin: 10, flexDirection: "row" }}>
         <AntDesign
